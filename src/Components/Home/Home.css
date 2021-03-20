@@ -1,0 +1,54 @@
+
+.home{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cart{
+    color: white;
+}
+.cart h1{
+    position: relative;
+    bottom: -10px;
+    font-weight: 800;
+}
+.cart h3{
+    padding: 40px 0;
+}
+
+.cart-1{
+    background-image: url('../../images/Group1.png');
+    height: 250px;
+    width: 250px;
+    background-size: cover;
+    border-radius: 10px;
+    text-align: center;
+    background-position: center;
+}
+.cart-2{
+    background-image: url('../../images/Group2.png');
+    height: 250px;
+    width: 250px;
+    background-size: cover;
+    border-radius: 10px;
+    text-align: center;
+    background-position: center;
+}
+.cart-3{
+    background-image: url('../../images/Group3.png');
+    height: 250px;
+    width: 250px;
+    background-size: cover;
+    border-radius: 10px;
+    text-align: center;
+    background-position: center;
+}
+.cart-4{
+    background-image: url('../../images/Group4.png');
+    height: 250px;
+    width: 250px;
+    background-size: cover;
+    border-radius: 10px;
+    text-align: center;
+    background-position: center;
+}

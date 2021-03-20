@@ -1,0 +1,7 @@
+.App{
+  background-image: url('./images/image7.png');
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+ }
