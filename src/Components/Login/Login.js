@@ -15,7 +15,7 @@ if(!firebase.apps.length){
 }
 
 const Login = () => {
-  // const [newUser,setNewUser] = useState(false)
+   const [newUser,setNewUser] = useState(false)
   const [user,setUser] =useState({
     isSignedIn:false,
     name:'',
@@ -33,6 +33,7 @@ const Login = () => {
   const handleGoogleSingIn =() =>{
     firebase.auth().signInWithPopup(googleProvider)
     .then (res =>{
+      handleResponse(res,true)
       const {displayName,email} =res.user;
       const signedInUser ={
         isSignedIn: true,
@@ -48,9 +49,18 @@ const Login = () => {
       console.log(err.message)
     })
   }
+  const handleResponse = (res ,redirect) =>{
+    setUser(res);
+   setLoggedInUser(res)
+   if(redirect){
+       
+   history.replace(from)
+   }
+}
   const handleSignOut =() =>{
     firebase.auth().signOut()
     .then(res => {
+      handleResponse(res,true)
         const signOutuser = {
           isSignedIn: false,
           name:'',
@@ -85,9 +95,9 @@ const Login = () => {
   }
   const handleFbSignin= () =>{
     firebase.auth().signInWithPopup(fbProvider)
-  .then((result) => {
-
-    var user = result.user;
+  .then((res) => {
+    handleResponse(res,true)
+    var user = res.user;
     console.log('fb user after sign in',user)
 
     // ...
@@ -105,6 +115,7 @@ const Login = () => {
     if(user.email && user.password){
     firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
   .then(res =>{
+    handleResponse(res,true)
     console.log(res.user)
     const newUserInfo = {...user}
     newUserInfo.error ='';
@@ -119,9 +130,11 @@ const Login = () => {
     setUser(newUserInfo);
   });
     }
+  
 if(!user.email && user.password){
   firebase.auth().signInWithEmailAndPassword(user.email, user.password)
   .then(res =>{
+    handleResponse(res,true)
     const newUserInfo = {...user}
     newUserInfo.error ='';
     newUserInfo.success = true;
@@ -154,15 +167,22 @@ if(!user.email && user.password){
 
   return (
       <div className="login">
+        <h1>Login</h1>
+        <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""/>
+      <label htmlFor="newUser">New User Sign up</label>
         <form className="login-form" onSubmit={handleSubmit}>
       
-      <input type="text" onBlur={handleBlur} name="email"  required placeholder="Your Email" />
-      {/* {errors.email && <span className="error">Username or Email is required</span>} */}
+        {newUser && <input name="name" type="text" onBlur={handleBlur} placeholder="Your name"/>}
+         <input type="text" onBlur={handleBlur} name="email"  required placeholder="Your Email" />
       
       <input type="password" onBlur={handleBlur} name="password"  required placeholder="Password" />
       {/* {errors.password && <span className="error">Password is required</span>} */}
      
       <input  className="btn-primary" type="submit" value="Login"/>
+      <p style={{color:'red'}}>{user.error}</p>
+     {
+       user.success &&  <p style={{color:'green'}}>User {user.email ? 'created' : 'Logged in'} successfully </p>
+     }
       <p>Don't have an account ? <a href="/signUp">create an account</a></p>
       <br/>
       
@@ -174,6 +194,7 @@ if(!user.email && user.password){
        user.isSignedIn ? <button onCkick={handleSignOut}>Sign out</button> :
       <button onClick={handleGoogleSingIn} className="social-media">Continue with Google</button>
      }
+      
     </form>
     {
         user.isSignedIn &&  <div>
@@ -182,10 +203,6 @@ if(!user.email && user.password){
            </div>
       }
 
-      <p style={{color:'red'}}>{user.error}</p>
-     {
-       user.success &&  <p style={{color:'green'}}>User {user.email ? 'created' : 'Logged in'} successfully </p>
-     }
       </div>
 
       

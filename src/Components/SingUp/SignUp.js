@@ -143,13 +143,7 @@ if(!user.email && user.password){
     console.log(error)
   });
   }
-
-//     const { handleSubmit, watch, errors } = useForm();
-//   const onSubmit = data => {
-//       console.log('singUp form submitted',data)
-// };
-
-//   console.log(watch("example")); 
+ 
 
   return (
       <div className="SignUp">
@@ -169,7 +163,11 @@ if(!user.email && user.password){
       {/* {errors.confirmpassword && <span className="error">Confirm Password is required</span>} */}
      
      <input className="btn-primary" type="submit" value="Create An Account"/>
-      <p>You have an account ? <a href="/LogIn">Login account</a></p>
+     <p style={{color:'red'}}>{user.error}</p>
+     {
+       user.success &&  <p style={{color:'green'}}>User {user.email ? 'created' : 'Logged in'} successfully </p>
+     }
+      <p style={{color:'black'}}>You have an account ? <a href="/LogIn">Login account</a></p>
       <br/>
       <button onClick={handleFbSignin} className="social-media"> Continue with Facebook</button>
      
@@ -184,10 +182,7 @@ if(!user.email && user.password){
             <p>Your email: {user.email}</p>
            </div>
       }
-       <p style={{color:'red'}}>{user.error}</p>
-     {
-       user.success &&  <p style={{color:'green'}}>User {user.email ? 'created' : 'Logged in'} successfully </p>
-     }
+      
 
      
      
