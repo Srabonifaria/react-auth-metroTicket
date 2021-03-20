@@ -1,5 +1,3 @@
-
-// import { useForm } from 'react-hook-form';
 import firebase from "firebase/app";
 import "firebase/auth";
 import './Login.css'
@@ -8,6 +6,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from "../../App";
 import { useHistory, useLocation } from "react-router";
 
+
 if(!firebase.apps.length){
   firebase.initializeApp(firebaseConfig)
 }else{
@@ -15,7 +14,7 @@ if(!firebase.apps.length){
 }
 
 const Login = () => {
-   const [newUser,setNewUser] = useState(false)
+ const [newUser,setNewUser] = useState(false)
   const [user,setUser] =useState({
     isSignedIn:false,
     name:'',
@@ -33,15 +32,16 @@ const Login = () => {
   const handleGoogleSingIn =() =>{
     firebase.auth().signInWithPopup(googleProvider)
     .then (res =>{
-      handleResponse(res,true)
-      const {displayName,email} =res.user;
+      // handleResponse(res,true)
+      const {displayName,email,photoURL} =res.user;
       const signedInUser ={
         isSignedIn: true,
         name:displayName,
         email:email,
+        photo:photoURL
       }
       setUser(signedInUser)
-      console.log(displayName,email)
+      console.log(displayName,email,photoURL)
 
     })
     .catch(err => {
@@ -49,18 +49,18 @@ const Login = () => {
       console.log(err.message)
     })
   }
-  const handleResponse = (res ,redirect) =>{
-    setUser(res);
-   setLoggedInUser(res)
-   if(redirect){
+//   const handleResponse = (res ,redirect) =>{
+//     setUser(res);
+//    setLoggedInUser(res)
+//    if(redirect){
        
-   history.replace(from)
-   }
-}
+//    history.replace(from)
+//    }
+// }
   const handleSignOut =() =>{
     firebase.auth().signOut()
     .then(res => {
-      handleResponse(res,true)
+      // handleResponse(res,true)
         const signOutuser = {
           isSignedIn: false,
           name:'',
@@ -96,10 +96,11 @@ const Login = () => {
   const handleFbSignin= () =>{
     firebase.auth().signInWithPopup(fbProvider)
   .then((res) => {
-    handleResponse(res,true)
+    var credential = res.credential;
+    // handleResponse(res,true)
     var user = res.user;
     console.log('fb user after sign in',user)
-
+    var accessToken = credential.accessToken;
     // ...
   })
   .catch((error) => {
@@ -112,11 +113,11 @@ const Login = () => {
   });
   }
   const handleSubmit = (e) =>{
-    if(user.email && user.password){
+    if(newUser && user.email && user.password){
     firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
   .then(res =>{
-    handleResponse(res,true)
-    console.log(res.user)
+    // handleResponse(res,true)
+    // console.log(res.user)
     const newUserInfo = {...user}
     newUserInfo.error ='';
     newUserInfo.success = true;
@@ -131,10 +132,10 @@ const Login = () => {
   });
     }
   
-if(!user.email && user.password){
+if(!newUser && user.email && user.password){
   firebase.auth().signInWithEmailAndPassword(user.email, user.password)
   .then(res =>{
-    handleResponse(res,true)
+    // handleResponse(res,true)
     const newUserInfo = {...user}
     newUserInfo.error ='';
     newUserInfo.success = true;
@@ -167,12 +168,10 @@ if(!user.email && user.password){
 
   return (
       <div className="login">
-        <h1>Login</h1>
         <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""/>
-      <label htmlFor="newUser">New User Sign up</label>
+        <label htmlFor="newUer">New User Sign up</label>
         <form className="login-form" onSubmit={handleSubmit}>
-      
-        {newUser && <input name="name" type="text" onBlur={handleBlur} placeholder="Your name"/>}
+        {newUser &&  <input name="name"  onBlur={handleBlur} type="text" placeholder="Your Name"/>}
          <input type="text" onBlur={handleBlur} name="email"  required placeholder="Your Email" />
       
       <input type="password" onBlur={handleBlur} name="password"  required placeholder="Password" />

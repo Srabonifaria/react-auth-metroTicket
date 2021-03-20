@@ -1,0 +1,28 @@
+
+[{
+    "id": 1,
+    "name": "ONE TIME TICKET",
+    "Born": "October 5, 2021",
+    "salary":100,
+    "img":"http://t3.gstatic.com/images?q=tbn:ANd9GcTUita0Dueq42YemMDjR5N_-zqVnytWS_Yh2uFatPvHCDq2H0_9XuIT0nRxVN-T"
+  }, {
+    "id": 2,
+    "name": "ONE DAY PASS",
+    "Born": "March 20,2021",
+    "salary":500,
+    "img":"http://t2.gstatic.com/images?q=tbn:ANd9GcQxNsVq2juC7g3XiQ4avaKKF3IFGd5ziD1gpARMRFU8dFfLefPU9O3NajEWdsWn"
+    
+  }, {
+    "id": 3,
+    "name": "MONTHLY PASS",
+    "Born": "JunE 9,2021",
+    "salary":1500,
+    "img": "http://t2.gstatic.com/images?q=tbn:ANd9GcTfcZjB4G7brLc0WCJTrGZg_zLhZmAvbKaflM7PLyprELSo7Zfgx4Ltn8Oa4S_i"
+  },{
+        "id": 2,
+        "name": "ANNUAL PASS",
+        "Born": "March 25,2021",
+        "salary":9000,
+        "img":"http://t2.gstatic.com/images?q=tbn:ANd9GcQxNsVq2juC7g3XiQ4avaKKF3IFGd5ziD1gpARMRFU8dFfLefPU9O3NajEWdsWn"
+        
+  }]

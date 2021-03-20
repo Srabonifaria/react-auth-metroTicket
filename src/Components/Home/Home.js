@@ -5,7 +5,7 @@ import './Home.css'
 const Home = () => {
     const history = useHistory()
     const handleSingIn = () => {
-        history.push('/login')
+        history.push('/destination')
     }
 
     return (
